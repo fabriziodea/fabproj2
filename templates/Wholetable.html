@@ -3,46 +3,71 @@
 
     <br>
     <br>
-    <a href="http://localhost:5000/addgame">Add new Record</a>
+    <a href="{{ url_for('savegame') }}">Add new Match</a>
 
 
-    <table border='6' background-color: #FDDF95;>
-        <tr bgcolor='lightBlue'>
-            <td>Date</td>
-            <td>Player1</td>
-            <td>Player2</td>
-            <td>Player3</td>
-            <td>Player4</td>
-            <td>Player5</td>
-            <td>Player6</td>
-            <td>Player7</td>
-            <td>Player8</td>
-            <td>Player9</td>
-            <td>Player10</td>
-            <td>Amend</td>
-        </tr>
-        {% for record in records %}
-    
-        <tr>
-            <td> {{record[0]}}</td>
-            <td> {{record[1]}}</a></td>
-            <td> {{record[2]}} </td>
-            <td> {{record[3]}} </td>
-            <td> {{record[4]}} </td>
-            <td> {{record[5]}} </td>
-            <td> {{record[6]}} </td>
-            <td> {{record[7]}} </td>
-            <td> {{record[8]}} </td>
-            <td> {{record[9]}} </td>
-            <td> {{record[10]}} </td>
-            <td> <a href="http://localhost:5000/editrecord/{{record[0]}}"> Edit</a> 
-                 <a href="http://localhost:5000/deletegame/{{record[0]}}"> Delete</a></td>
-        </tr>
-            {%  endfor %}
-    </table>
+    <form action="{{ url_for('filtergame') }}" method="POST">
+        <input type="text" name="filtergame" size="50"><br><br>
+                    <input type="submit" value="Filter">
+        </form>
+
+
+ <table>
+    <tr bgcolor='Green'>
+                
+    <td> Date </td>
+    <td> Player 1 </td>
+    <td> Player 2 </td>
+    <td> Player 3 </td>
+    <td> Player 4 </td>
+    <td> Player 5 </td>
+    <td> Player 6 </td>
+    <td> Player 7 </td>
+    <td> Player 8 </td>
+    <td> Player 9 </td>
+    <td> Player 10 </td>
+    <td> Edit/Delete </td>
+
+        
+    </tr>
+            {%  for record in records %}
+        
+                <tr>
+                        <td>  {{record.date}}   </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl1) }}"> {{ record.Pl1 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl2) }}"> {{ record.Pl2 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl3) }}"> {{ record.Pl3 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl4) }}"> {{ record.Pl4 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl5) }}"> {{ record.Pl5 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl6) }}"> {{ record.Pl6 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl7) }}"> {{ record.Pl7 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl8) }}"> {{ record.Pl8 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl9) }}"> {{ record.Pl9 }}</a> </td>
+                        <td> <a href="{{ url_for('playerpage', name = record.Pl10) }}"> {{ record.Pl10 }}</a> </td>
+                        <td> <a href="{{ url_for('editmatch', empno = record.empno) }}"> edit </a>, 
+                            <a href="{{ url_for('deletegame', empno = record.empno) }}"> delete </a>
+                
+
+
+                        <td> <a href="{{ url_for('editRecordForm', empno = record.empno) }}"> edit </a>, 
+                            <a href="{{ url_for('deleteEmployee', empno = record.empno) }}"> delete </a>
+                        </td>
+                </tr>
+        
+            {% endfor %}
+        </table>
+
+
+
+
+
+
+
+
+
 
 <br>
-    <a href="http://localhost:5000/addgame">Add new Record</a>
+    <a href="{{ url_for('savegame') }}">Add new Match</a>
 
 
 

@@ -1,0 +1,55 @@
+<html>
+<h2>Monday Games</h2>
+
+    <br>
+    <br>
+    <a href="{{url_for('addgame')}}">Add new Match</a>
+
+ <table>
+    <tr bgcolor='Green'>
+                
+    <td> Date </td>
+    <td> Player 1 </td>
+    <td> Player 2 </td>
+    <td> Player 3 </td>
+    <td> Player 4 </td>
+    <td> Player 5 </td>
+    <td> Player 6 </td>
+    <td> Player 7 </td>
+    <td> Player 8 </td>
+    <td> Player 9 </td>
+    <td> Player 10 </td>
+    <td> Edit/Delete </td>
+
+        
+    </tr>
+            {%  for record in records %}
+        
+                <tr>
+                        <td>  {{record.matchno}}   </td>
+                        <td>  {{record.date}}   </td>
+                        <td> {{ record.Pl1 }} </td>
+                        <td> {{ record.Pl2 }} </td>
+                        <td> {{ record.Pl3 }} </td>
+                        <td>  {{ record.Pl4 }} </td>
+                        <td> {{ record.Pl5 }}</td>
+                        <td> {{ record.Pl6 }} </td>
+                        <td> {{ record.Pl7 }} </td>
+                        <td> {{ record.Pl8 }} </td>
+                        <td> {{ record.Pl9 }}</td>
+                        <td> {{ record.Pl10 }} </td>
+                        <td> <a href="{{ url_for('editmatch', matchno = record.matchno) }}"> edit </a>, 
+                            <a href="{{ url_for('deletegame', matchno = record.matchno) }}"> delete </a>
+                
+                        </td>
+                </tr>
+        
+            {% endfor %}
+        </table>
+
+<br>
+    <a href="{{ url_for('savegame') }}">Add new Match</a>
+
+
+
+</html>
