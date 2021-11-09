@@ -22,4 +22,22 @@ pip3 install -r requirements.txt
 
 #python3 -m pytest --cov=application
 python3 -m pytest --cov=Fives --cov-report html
-python3 Fives.py
+#python3 Fives.py
+cat - > /tmp/app.service << EOF
+[Unit]
+Description=Run flask app as systemd
+
+[Service]
+User=jenkins
+Environment=db_uri=$db_uri
+Environment=secretkey=$secretkey
+Environment=GUNICORN_CMD_ARGS='--workers=4 --bind=0.0.0.0:5000'
+ExecStart=/bin/sh -c "cd /home/jenkins/.jenkins/workspace/fabproj1 && gunicorn3 app:app"
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo cp /tmp/app.service /etc/systemd/system/app.service
+sudo systemctl daemon-reload
+sudo systemctl start app
