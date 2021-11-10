@@ -35,8 +35,13 @@ class TestViews(TestBase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Add another game', response.data)
 
+    def test_edit_game(self):
+        response = self.client.get(url_for('editgame', matchno=1))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Update game', response.data)
+
     def test_save_game(self):
-        response = self.client.post(    url_for('savegame'),
+        response = self.client.post(url_for('savegame'),
         data = dict( date=datetime.date(2021, 11, 21), playertext= 'Jima Jimb Jimc Jimd Jime Jimf Jimg Jimh Jimi Jimj'),
         follow_redirects = True
         )
@@ -51,3 +56,12 @@ class TestViews(TestBase):
         response = self.client.get(url_for('deletegame', matchno=1), follow_redirects=True)
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Monday Games', response.data)
+
+    def test_update_game(self):
+        response = self.client.post(
+            url_for('editgame', matchno=1),
+            data = dict(date=datetime.date(2019, 12, 31), Pl1='Jaya', Pl2='Jayb', Pl3='Jayc', Pl4='Jayd', Pl5='Jaye', Pl6='Jayf',
+                        Pl7='Jayg',Pl8='Jayh',Pl9='Jayi',Pl10='Jayj'),
+            follow_redirects = True
+        )
+        self.assertIn(b'Jayi', response.data)
