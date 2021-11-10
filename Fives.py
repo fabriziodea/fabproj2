@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect
 from breaklist import breaklist
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 from os import getenv
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SelectField, SubmitField, DateField
@@ -94,10 +94,13 @@ def savegame():
 def filtergame():
     data = Match.query.filter( (Match.Pl1==request.form["filtername"]) | (Match.Pl2==request.form["filtername"]) | (Match.Pl3==request.form["filtername"]) 
                             | (Match.Pl4==request.form["filtername"]) | (Match.Pl5==request.form["filtername"])  | (Match.Pl6==request.form["filtername"]) | (Match.Pl7==request.form["filtername"])  
-                            | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).all()
+                            | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).order_by(Match.date).all()
+    n= len(data)
+    name = request.form["filtername"]
+    prova=data[0].date
+    prova2= data[-1].date
 
-
-    return render_template("WholetableS.html",records=data)
+    return render_template("WholetableS.html",records=data, n=n, name = name, prova=prova, prova2=prova2)
 
 
 #@app.route("/playerpage/<str:name>")
@@ -132,7 +135,6 @@ def editgame(matchno):
         return redirect("/")
     return render_template('EditGame.html', form=form, record=matchupd)
 
-#editform-> editmatch still to be done
 
 
 
