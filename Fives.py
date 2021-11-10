@@ -100,9 +100,6 @@ def filtergame():
     return render_template("WholetableS.html",records=data)
 
 
-#, Match.Pl2==request.form["filtername"]))
-
-
 
 #@app.route("/filtergame",methods=["POST"])
 #def filtergame():
