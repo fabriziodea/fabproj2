@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from breaklist import breaklist
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 from os import getenv
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SelectField, SubmitField, DateField
@@ -58,7 +59,7 @@ class UpdateMatch(FlaskForm):
 @app.route("/")
 def home():
     matches = Match.query.all()
-    return render_template("wholetableS.html", records=matches)
+    return render_template("WholetableS.html", records=matches)
 
 @app.route("/addgame")
 def addgame():
@@ -86,6 +87,22 @@ def savegame():
         db.session.commit()
         return redirect("/")
     return render_template("AddGame.html", form=form)
+
+
+
+@app.route("/filtergame",methods=["POST"])
+def filtergame():
+    data = Match.query.filter( (Match.Pl1==request.form["filtername"]) | (Match.Pl2==request.form["filtername"]) | (Match.Pl3==request.form["filtername"]) 
+                            | (Match.Pl4==request.form["filtername"]) | (Match.Pl5==request.form["filtername"])  | (Match.Pl6==request.form["filtername"]) | (Match.Pl7==request.form["filtername"])  
+                            | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).all()
+
+
+    return render_template("WholetableS.html",records=data)
+
+
+#, Match.Pl2==request.form["filtername"]))
+
+
 
 #@app.route("/filtergame",methods=["POST"])
 #def filtergame():
@@ -137,5 +154,5 @@ def deletegame(matchno):
     db.session.commit()
     return redirect("/")
 
-
-app.run(debug=True, host='0.0.0.0')
+if __name__=='__main__':
+    app.run(debug=True, host='0.0.0.0')
