@@ -51,7 +51,7 @@
                         <td> {{ record.Pl8 }} </td>
                         <td> {{ record.Pl9 }}</td>
                         <td> {{ record.Pl10 }} </td>
-                        <td> <a href="{{ url_for('editmatch', matchno = record.matchno) }}"> edit </a>, 
+                        <td> <a href="{{ url_for('editgame', matchno = record.matchno) }}"> edit </a>, 
                             <a href="{{ url_for('deletegame', matchno = record.matchno) }}"> delete </a>
                 
                         </td>

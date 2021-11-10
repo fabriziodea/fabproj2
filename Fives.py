@@ -33,7 +33,7 @@ class Match(db.Model):
     Pl10 = db.Column(db.String(15))
 
 
-db.drop_all()
+#db.drop_all()
 db.create_all()
 
 class AddMatch(FlaskForm):
@@ -100,18 +100,6 @@ def filtergame():
     return render_template("WholetableS.html",records=data)
 
 
-
-#@app.route("/filtergame",methods=["POST"])
-#def filtergame():
-#    if request.form["dept"]=="all":
-#        return redirect("/")
-#    else:
-#        data = Employee.query.filter_by(dept=request.form["dept"]).all()
-#        return render_template("WholetableS.html",records=data)
-
-# everything to be done
-
-
 #@app.route("/playerpage/<str:name>")
 #def playerpage(name):
 #	data = Player.query.filter_by(name=name).first()
@@ -120,10 +108,14 @@ def filtergame():
 #playerpage still to be done
 
 
-@app.route('/editmatch/<int:matchno>', methods=['GET', 'POST'])
-def editmatch(matchno):
-    form = UpdateMatch()
+@app.route('/editgame/<int:matchno>', methods=['GET', 'POST'])
+def editgame(matchno):
     matchupd = Match.query.filter_by(matchno=matchno).first()
+    form = UpdateMatch(date=matchupd.date, Pl1=matchupd.Pl1, Pl2=matchupd.Pl2, Pl3=matchupd.Pl3, Pl4=matchupd.Pl4,
+                        Pl5=matchupd.Pl5, Pl6=matchupd.Pl6, Pl7=matchupd.Pl7, Pl8=matchupd.Pl8, Pl9=matchupd.Pl9,
+                        Pl10=matchupd.Pl10
+                         )
+    
     if request.method == 'POST':
         matchupd.date = form.date.data
         matchupd.Pl1 = form.Pl1.data
@@ -138,7 +130,7 @@ def editmatch(matchno):
         matchupd.Pl10 = form.Pl10.data
         db.session.commit()
         return redirect("/")
-    return render_template('editform.html', form=form)
+    return render_template('EditGame.html', form=form, record=matchupd)
 
 #editform-> editmatch still to be done
 
