@@ -1,7 +1,4 @@
-from Fives import Match, Player
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
-from Fives import db
+#from Fives import Match, Player, db
 
 
 
@@ -80,6 +77,27 @@ def breaklist(textraw):
 
 #=========================
 
+def fillplayertable():
+    uniqlist=[]
+    for mat in Match.query.all():
+        k=0
+        mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
+        while k<10:
+            if mplayer[k] not in uniqlist:
+                uniqlist.append(mplayer[k])
+                line= stats(mplayer[k])
+                newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+                db.session.add(newplayer)
+                db.session.commit()
+            k+=1
+    return Player
+
+    
+
+
+
+#=============================
+
 #print(Match.query.first().Pl1)
 #line= stats(Match.query.first().Pl1)
 #print(line)
@@ -87,33 +105,32 @@ def breaklist(textraw):
 
 #print(Player.query.first().last)
 
-for player in Player.query.all():
-    db.session.delete(player)
-    db.session.commit()
+#for player in Player.query.all():
+#    db.session.delete(player)
+#    db.session.commit()
 
 
 
-uniqlist=[]
-
-for mat in Match.query.all():
-    k=0
-    mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
-    while k<10:
-        if mplayer[k] not in uniqlist:
-            uniqlist.append(mplayer[k])
-            line= stats(mplayer[k])
-            newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
-            db.session.add(newplayer)
-            db.session.commit()
-        k+=1
+#uniqlist=[]
+#for mat in Match.query.all():
+#    k=0
+#    mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
+#    while k<10:
+#        if mplayer[k] not in uniqlist:
+#            uniqlist.append(mplayer[k])
+#            line= stats(mplayer[k])
+#            newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+#            db.session.add(newplayer)
+#            db.session.commit()
+#        k+=1
     
 #for p in nlist:
 #    print(p)
 
 
-print("------------All Players:-------------")
-for player in Player.query.all():
-    print(f"{player.name} Caps:{player.caps}  First Game:{player.first} Last Game:{player.last}")
+#print("------------All Players:-------------")
+#for player in Player.query.all():
+#    print(f"{player.name} Caps:{player.caps}  First Game:{player.first} Last Game:{player.last}")
 
 
 

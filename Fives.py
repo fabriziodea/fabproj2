@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect
-from breaklist import breaklist
+from FivesFunc import breaklist, fillplayertable
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_, func
+from sqlalchemy import or_, func, desc
 from os import getenv, name
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SelectField, SubmitField, DateField
@@ -91,6 +91,7 @@ def savegame():
         newmatch = Match(date=date, Pl1=Pl1, Pl2=Pl2, Pl3=Pl3, Pl4=Pl4, Pl5=Pl5, Pl6=Pl6, Pl7=Pl7, Pl8=Pl8, Pl9=Pl9, Pl10=Pl10)
         db.session.add(newmatch)
         db.session.commit()
+        fillplayertable()
         return redirect("/")
     return render_template("AddGame.html", form=form)
 
@@ -130,6 +131,7 @@ def editgame(matchno):
         matchupd.Pl9 = form.Pl9.data
         matchupd.Pl10 = form.Pl10.data
         db.session.commit()
+        fillplayertable()
         return redirect("/")
     return render_template('EditGame.html', form=form, record=matchupd)
 
@@ -144,24 +146,12 @@ def deletegame(matchno):
 #=================================
 #=======  Second Table   =========
 
-# first issue how to iterate
-# second issue, how to compare to a column in another table
-
-#@app.route("/playerstable"):
-#def playerstable():
-#    for m in Match:
-#        for p in Match.column:
-#            if p =! players.table.name
-#                line = stats(p)
-
-#    newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
-#    db.session.add(newplayer)
-#    db.session.commit()
 
 
-#    return render_template("WholetableS.html", records=matches)
-
-#========
+@app.route("/mostcaps")
+def mostcaps():
+    players = Player.query.order_by(desc(Player.caps)).all()
+    return render_template("MostCaps.html", records=players)
 
 
 #@app.route("/playerpage/<str:name>")
