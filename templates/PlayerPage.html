@@ -1,0 +1,20 @@
+<html><center>
+    <br><br><br>
+    <h2>{{record.name}}</h2>
+    <br><br><br>
+    
+<table border='5' bgcolor='lightyellow'>
+        <tr><td>CAPS: </td><td> {{record.caps}} </td>  </tr>
+        <tr><td>First game played</td> <td>{{ record.first}} </td></tr>
+        <tr><td>Last game played</td> <td>{{ record.last}} </td> </tr>
+        </table>
+
+        <br><br><br> <br><br><br>
+
+        <a href="{{url_for('home')}}">HOME</a><br>
+        <a href="{{url_for('mostcaps')}}">Players Stats</a>
+
+
+
+</center>
+</html>

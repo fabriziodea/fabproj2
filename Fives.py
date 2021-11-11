@@ -39,7 +39,7 @@ class Player(db.Model):
     last = db.Column(db.Date)
 
 
-db.drop_all()
+#db.drop_all()
 db.create_all()
 
 class AddMatch(FlaskForm):
@@ -147,18 +147,16 @@ def deletegame(matchno):
 #=================================
 #=======  Second Table   =========
 
-
-
 @app.route("/mostcaps")
 def mostcaps():
     players = Player.query.order_by(desc(Player.caps)).all()
     return render_template("MostCaps.html", records=players)
 
 
-#@app.route("/playerpage/<str:name>")
-#def playerpage(name):
-#	data = Player.query.filter_by(name=name).first()
-#	return render_template("playerpage.html",record=data)
+@app.route("/playerpage/<playername>")
+def playerpage(playername):
+	data = Player.query.filter_by(name=playername).first()
+	return render_template("playerpage.html",record=data)
 
 #playerpage still to be done
 

@@ -45,6 +45,11 @@ class TestViews(TestBase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Most Capped', response.data)
 
+    def test_playerpage(self):
+        response = self.client.get(url_for('playerpage', name='Johnc'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Johnc', response.data)
+
     def test_save_game(self):
         response = self.client.post(url_for('savegame'),
         data = dict( date=datetime.date(2021, 11, 21), playertext= 'Jima Jimb Jimc Jimd Jime Jimf Jimg Jimh Jimi Jimj'),
