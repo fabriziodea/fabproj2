@@ -46,9 +46,9 @@ class TestViews(TestBase):
         self.assertIn(b'Most Capped', response.data)
 
     def test_playerpage(self):
-        response = self.client.get(url_for('playerpage', name='Johnc'))
+        response = self.client.get(url_for('playerpage', playername='Johne'))
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Johnc', response.data)
+        self.assertIn(b'CAPS', response.data)
 
     def test_save_game(self):
         response = self.client.post(url_for('savegame'),
