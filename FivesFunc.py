@@ -13,7 +13,7 @@ def stats(filtername):
     
     data = Match.query.filter( (Match.Pl1==filtername) | (Match.Pl2==filtername) | (Match.Pl3==filtername) 
                             | (Match.Pl4==filtername) | (Match.Pl5==filtername)  | (Match.Pl6==filtername) | (Match.Pl7==filtername)  
-                            | (Match.Pl8==filtername) | (Match.Pl9==filtername)  | (Match.Pl10==filtername)   ).all()
+                            | (Match.Pl8==filtername) | (Match.Pl9==filtername)  | (Match.Pl10==filtername)   ).order_by(Match.date).all()
 
     n= len(data)
     date1=data[0].date
@@ -102,7 +102,6 @@ for mat in Match.query.all():
         if mplayer[k] not in uniqlist:
             uniqlist.append(mplayer[k])
             line= stats(mplayer[k])
-            print(line)
             newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
             db.session.add(newplayer)
             db.session.commit()
@@ -110,6 +109,12 @@ for mat in Match.query.all():
     
 #for p in nlist:
 #    print(p)
+
+
+print("------------All Players:-------------")
+for player in Player.query.all():
+    print(f"{player.name} Caps:{player.caps}  First Game:{player.first} Last Game:{player.last}")
+
 
 
 
@@ -123,12 +128,6 @@ for mat in Match.query.all():
 #    newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
 #    db.session.add(newplayer)
 #    db.session.commit()
-
-
-print("------------All Players:-------------")
-for player in Player.query.all():
-    print(f"{player.name} Caps:{player.caps}  First Game:{player.first} Last Game:{player.last}")
-
 
 
 
