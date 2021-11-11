@@ -141,6 +141,7 @@ def deletegame(matchno):
     matchdel = Match.query.filter_by(matchno=matchno).first()
     db.session.delete(matchdel)
     db.session.commit()
+    fillplayertable(db, Match, Player)
     return redirect("/")
 
 #=================================
