@@ -44,16 +44,16 @@
                 <tr>
                         <td>  {{record.matchno}}   </td>
                         <td>  {{record.date}}   </td>
-                        <td> {{ record.Pl1 }} </td>
-                        <td> {{ record.Pl2 }} </td>
-                        <td> {{ record.Pl3 }} </td>
-                        <td>  {{ record.Pl4 }} </td>
-                        <td> {{ record.Pl5 }}</td>
-                        <td> {{ record.Pl6 }} </td>
-                        <td> {{ record.Pl7 }} </td>
-                        <td> {{ record.Pl8 }} </td>
-                        <td> {{ record.Pl9 }}</td>
-                        <td> {{ record.Pl10 }} </td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl1 ) }}">{{ record.Pl1 }} </a></td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl2 ) }}">{{ record.Pl2 }}</a> </td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl3 ) }}">{{ record.Pl3 }}</a> </td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl4 ) }}">{{ record.Pl4 }}</a> </td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl5 ) }}">{{ record.Pl5 }}</a></td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl6 ) }}">{{ record.Pl6 }} </a></td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl7 ) }}">{{ record.Pl7 }} </a></td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl8 ) }}">{{ record.Pl8 }}</a> </td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl9 ) }}">{{ record.Pl9 }}</a></td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl10 ) }}">{{ record.Pl10 }} </a></td>
                         <td> <a href="{{ url_for('editgame', matchno = record.matchno) }}"> edit </a>, 
                             <a href="{{ url_for('deletegame', matchno = record.matchno) }}"> delete </a>
                 
