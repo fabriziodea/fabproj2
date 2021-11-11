@@ -68,7 +68,8 @@ def breaklist(textraw):
         lista.append(player)
 
     while len(lista)<10:
-        lista.append('ExtraPlayer')
+        n=10-len(lista)
+        lista.append(f'ExtraPlayer{n}')
 
     return lista
 
