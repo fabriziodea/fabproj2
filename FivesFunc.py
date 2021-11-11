@@ -78,10 +78,8 @@ def breaklist(textraw):
 #=========================
 
 def fillplayertable(db, Match, Player):
-    if len(Player.query.all()) == 0:
-        uniqlist=[]
-    else:
-        uniqlist=[ Player.name for Player in Player.query.all()]
+    uniqlist=[]
+    Player.query.delete()
     for mat in Match.query.all():
         k=0
         mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
@@ -137,8 +135,8 @@ def fillplayertable(db, Match, Player):
 
 
 
-
-
+# come prendere una colonna
+#uniqlist=[ Player.name for Player in Player.query.all()]
 
 
 

@@ -39,7 +39,7 @@ class Player(db.Model):
     last = db.Column(db.Date)
 
 
-#db.drop_all()
+db.drop_all()
 db.create_all()
 
 class AddMatch(FlaskForm):
