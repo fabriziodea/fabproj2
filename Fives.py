@@ -64,7 +64,7 @@ class UpdateMatch(FlaskForm):
 
 @app.route("/")
 def home():
-    matches = Match.query.order_by(Match.date).all()
+    matches = Match.query.order_by(desc(Match.date)).all()
     return render_template("WholetableS.html", records=matches)
 
 @app.route("/addgame")
@@ -91,7 +91,7 @@ def savegame():
         newmatch = Match(date=date, Pl1=Pl1, Pl2=Pl2, Pl3=Pl3, Pl4=Pl4, Pl5=Pl5, Pl6=Pl6, Pl7=Pl7, Pl8=Pl8, Pl9=Pl9, Pl10=Pl10)
         db.session.add(newmatch)
         db.session.commit()
-        fillplayertable()
+        fillplayertable(db, Match, Player)
         return redirect("/")
     return render_template("AddGame.html", form=form)
 
@@ -101,7 +101,7 @@ def savegame():
 def filtergame():
     data = Match.query.filter( (Match.Pl1==request.form["filtername"]) | (Match.Pl2==request.form["filtername"]) | (Match.Pl3==request.form["filtername"]) 
                             | (Match.Pl4==request.form["filtername"]) | (Match.Pl5==request.form["filtername"])  | (Match.Pl6==request.form["filtername"]) | (Match.Pl7==request.form["filtername"])  
-                            | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).order_by(Match.date).all()
+                            | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).order_by(desc(Match.date)).all()
     n= len(data)
     name = request.form["filtername"]
     prova=data[0].date
@@ -131,7 +131,7 @@ def editgame(matchno):
         matchupd.Pl9 = form.Pl9.data
         matchupd.Pl10 = form.Pl10.data
         db.session.commit()
-        fillplayertable()
+        fillplayertable(db, Match, Player)
         return redirect("/")
     return render_template('EditGame.html', form=form, record=matchupd)
 

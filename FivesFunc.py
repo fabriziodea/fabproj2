@@ -1,4 +1,4 @@
-#from Fives import Match, Player, db
+# from Fives import Match
 
 
 
@@ -6,7 +6,7 @@
 #filtername=input("name of the player")
 
 #.order_by(Match.date)
-def stats(filtername):
+def stats(Match, filtername):
     
     data = Match.query.filter( (Match.Pl1==filtername) | (Match.Pl2==filtername) | (Match.Pl3==filtername) 
                             | (Match.Pl4==filtername) | (Match.Pl5==filtername)  | (Match.Pl6==filtername) | (Match.Pl7==filtername)  
@@ -77,15 +77,18 @@ def breaklist(textraw):
 
 #=========================
 
-def fillplayertable():
-    uniqlist=[]
+def fillplayertable(db, Match, Player):
+    if len(Player.query.all()) == 0:
+        uniqlist=[]
+    else:
+        uniqlist=[ Player.name for Player in Player.query.all()]
     for mat in Match.query.all():
         k=0
         mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
         while k<10:
             if mplayer[k] not in uniqlist:
                 uniqlist.append(mplayer[k])
-                line= stats(mplayer[k])
+                line= stats(Match, mplayer[k])
                 newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
                 db.session.add(newplayer)
                 db.session.commit()

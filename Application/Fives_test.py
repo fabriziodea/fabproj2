@@ -1,6 +1,6 @@
 from flask import url_for
 from flask_testing import TestCase
-from Fives import app, db, Match
+from Fives import app, db, Match, Player
 import datetime
 
 
@@ -39,6 +39,11 @@ class TestViews(TestBase):
         response = self.client.get(url_for('editgame', matchno=1))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Update game', response.data)
+
+    def test_mostcaps(self):
+        response = self.client.get(url_for('mostcaps'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Most Capped', response.data)
 
     def test_save_game(self):
         response = self.client.post(url_for('savegame'),
