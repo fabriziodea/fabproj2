@@ -3,7 +3,7 @@ from breaklist import breaklist
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_, func
-from os import getenv
+from os import getenv, name
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SelectField, SubmitField, DateField
 import pymysql
@@ -32,6 +32,12 @@ class Match(db.Model):
     Pl9 = db.Column(db.String(15))
     Pl10 = db.Column(db.String(15))
 
+class Player(db.Model):
+    name = db.Column(db.String(15), primary_key = True)
+    caps = db.Column(db.Integer)
+    first = db.Column(db.Date)
+    last = db.Column(db.Date)
+
 
 #db.drop_all()
 db.create_all()
@@ -58,7 +64,7 @@ class UpdateMatch(FlaskForm):
 
 @app.route("/")
 def home():
-    matches = Match.query.all()
+    matches = Match.query.order_by(Match.date).all()
     return render_template("WholetableS.html", records=matches)
 
 @app.route("/addgame")
@@ -103,14 +109,6 @@ def filtergame():
     return render_template("WholetableS.html",records=data, n=n, name = name, prova=prova, prova2=prova2)
 
 
-#@app.route("/playerpage/<str:name>")
-#def playerpage(name):
-#	data = Player.query.filter_by(name=name).first()
-#	return render_template("playerpage.html",record=data)
-
-#playerpage still to be done
-
-
 @app.route('/editgame/<int:matchno>', methods=['GET', 'POST'])
 def editgame(matchno):
     matchupd = Match.query.filter_by(matchno=matchno).first()
@@ -136,14 +134,42 @@ def editgame(matchno):
     return render_template('EditGame.html', form=form, record=matchupd)
 
 
-
-
 @app.route("/deletegame/<int:matchno>")
 def deletegame(matchno):
     matchdel = Match.query.filter_by(matchno=matchno).first()
     db.session.delete(matchdel)
     db.session.commit()
     return redirect("/")
+
+#=================================
+#=======  Second Table   =========
+
+# first issue how to iterate
+# second issue, how to compare to a column in another table
+
+#@app.route("/playerstable"):
+#def playerstable():
+#    for m in Match:
+#        for p in Match.column:
+#            if p =! players.table.name
+#                line = stats(p)
+
+#    newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+#    db.session.add(newplayer)
+#    db.session.commit()
+
+
+#    return render_template("WholetableS.html", records=matches)
+
+#========
+
+
+#@app.route("/playerpage/<str:name>")
+#def playerpage(name):
+#	data = Player.query.filter_by(name=name).first()
+#	return render_template("playerpage.html",record=data)
+
+#playerpage still to be done
 
 if __name__=='__main__':
     app.run(debug=True, host='0.0.0.0')

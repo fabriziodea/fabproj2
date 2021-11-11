@@ -1,14 +1,19 @@
-from Fives import Match
+from Fives import Match, Player
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func
 from Fives import db
 
+
+
+
 #filtername=input("name of the player")
+
+#.order_by(Match.date)
 def stats(filtername):
     
     data = Match.query.filter( (Match.Pl1==filtername) | (Match.Pl2==filtername) | (Match.Pl3==filtername) 
                             | (Match.Pl4==filtername) | (Match.Pl5==filtername)  | (Match.Pl6==filtername) | (Match.Pl7==filtername)  
-                            | (Match.Pl8==filtername) | (Match.Pl9==filtername)  | (Match.Pl10==filtername)   ).order_by(Match.date).all()
+                            | (Match.Pl8==filtername) | (Match.Pl9==filtername)  | (Match.Pl10==filtername)   ).all()
 
     n= len(data)
     date1=data[0].date
@@ -73,3 +78,103 @@ def breaklist(textraw):
 #for x in lista:
 #   print(x)
 
+#=========================
+
+#print(Match.query.first().Pl1)
+#line= stats(Match.query.first().Pl1)
+#print(line)
+#print(len(Match.query.all()))
+
+#print(Player.query.first().last)
+
+for player in Player.query.all():
+    db.session.delete(player)
+    db.session.commit()
+
+
+
+uniqlist=[]
+
+for mat in Match.query.all():
+    k=0
+    mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
+    while k<10:
+        if mplayer[k] not in uniqlist:
+            uniqlist.append(mplayer[k])
+            line= stats(mplayer[k])
+            print(line)
+            newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+            db.session.add(newplayer)
+            db.session.commit()
+        k+=1
+    
+#for p in nlist:
+#    print(p)
+
+
+
+
+
+
+
+#if len(Player.query.all()) == 0:
+#    line= stats(Match.query.first().Pl1)
+#    print(line)
+#    newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+#    db.session.add(newplayer)
+#    db.session.commit()
+
+
+print("------------All Players:-------------")
+for player in Player.query.all():
+    print(f"{player.name} Caps:{player.caps}  First Game:{player.first} Last Game:{player.last}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#for Match in Match.query.all():
+#    k=0
+#    mplayer= [Match.Pl1, Match.Pl2, Match.Pl3, Match.Pl4, Match.Pl5, Match.Pl6, Match.Pl7, Match.Pl8, Match.Pl9, Match.Pl10]
+#    while k<10:
+#        if mplayer[k] not in player.name:
+#            line= stats(mplayer[k])
+#            print(line)
+#           newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+#            db.session.add(newplayer)
+#            db.session.commit()            
+#        k+=1
+
+
+
+
+
+
+
+
+
+
+""" line= stats(Match.query.first().Pl2)
+print(line)
+newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+db.session.add(newplayer)
+db.session.commit()
+
+line= stats(Match.query.first().Pl3)
+print(line)
+newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+db.session.add(newplayer)
+db.session.commit() """
+    
+#print(Match.Pl1)
