@@ -103,7 +103,6 @@ def filtergame():
                             | (Match.Pl4==request.form["filtername"]) | (Match.Pl5==request.form["filtername"])  | (Match.Pl6==request.form["filtername"]) | (Match.Pl7==request.form["filtername"])  
                             | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).order_by(desc(Match.date)).all()
 
-
     return render_template("WholetableS.html",records=data)
 
 
@@ -154,8 +153,6 @@ def mostcaps():
 def playerpage(playername):
 	data = Player.query.filter_by(name=playername).first()
 	return render_template("playerpage.html",record=data)
-
-#playerpage still to be done
 
 if __name__=='__main__':
     app.run(debug=True, host='0.0.0.0')
