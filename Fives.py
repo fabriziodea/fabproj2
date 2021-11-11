@@ -102,12 +102,9 @@ def filtergame():
     data = Match.query.filter( (Match.Pl1==request.form["filtername"]) | (Match.Pl2==request.form["filtername"]) | (Match.Pl3==request.form["filtername"]) 
                             | (Match.Pl4==request.form["filtername"]) | (Match.Pl5==request.form["filtername"])  | (Match.Pl6==request.form["filtername"]) | (Match.Pl7==request.form["filtername"])  
                             | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).order_by(desc(Match.date)).all()
-    n= len(data)
-    name = request.form["filtername"]
-    prova=data[0].date
-    prova2= data[-1].date
 
-    return render_template("WholetableS.html",records=data, n=n, name = name, prova=prova, prova2=prova2)
+
+    return render_template("WholetableS.html",records=data)
 
 
 @app.route('/editgame/<int:matchno>', methods=['GET', 'POST'])
