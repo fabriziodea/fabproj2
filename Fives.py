@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, redirect
-from breaklist import breaklist
+from FivesFunc import breaklist, fillplayertable
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_
-from os import getenv
+from sqlalchemy import or_, func, desc
+from os import getenv, name
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, SelectField, SubmitField, DateField
 import pymysql
@@ -32,8 +32,14 @@ class Match(db.Model):
     Pl9 = db.Column(db.String(15))
     Pl10 = db.Column(db.String(15))
 
+class Player(db.Model):
+    name = db.Column(db.String(15), primary_key = True)
+    caps = db.Column(db.Integer)
+    first = db.Column(db.Date)
+    last = db.Column(db.Date)
 
-#db.drop_all()
+
+db.drop_all()
 db.create_all()
 
 class AddMatch(FlaskForm):
@@ -58,7 +64,7 @@ class UpdateMatch(FlaskForm):
 
 @app.route("/")
 def home():
-    matches = Match.query.all()
+    matches = Match.query.order_by(desc(Match.date)).all()
     return render_template("WholetableS.html", records=matches)
 
 @app.route("/addgame")
@@ -85,6 +91,7 @@ def savegame():
         newmatch = Match(date=date, Pl1=Pl1, Pl2=Pl2, Pl3=Pl3, Pl4=Pl4, Pl5=Pl5, Pl6=Pl6, Pl7=Pl7, Pl8=Pl8, Pl9=Pl9, Pl10=Pl10)
         db.session.add(newmatch)
         db.session.commit()
+        fillplayertable(db, Match, Player)
         return redirect("/")
     return render_template("AddGame.html", form=form)
 
@@ -94,18 +101,13 @@ def savegame():
 def filtergame():
     data = Match.query.filter( (Match.Pl1==request.form["filtername"]) | (Match.Pl2==request.form["filtername"]) | (Match.Pl3==request.form["filtername"]) 
                             | (Match.Pl4==request.form["filtername"]) | (Match.Pl5==request.form["filtername"])  | (Match.Pl6==request.form["filtername"]) | (Match.Pl7==request.form["filtername"])  
-                            | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).all()
+                            | (Match.Pl8==request.form["filtername"]) | (Match.Pl9==request.form["filtername"])  | (Match.Pl10==request.form["filtername"])   ).order_by(desc(Match.date)).all()
+    n= len(data)
+    name = request.form["filtername"]
+    prova=data[0].date
+    prova2= data[-1].date
 
-
-    return render_template("WholetableS.html",records=data)
-
-
-#@app.route("/playerpage/<str:name>")
-#def playerpage(name):
-#	data = Player.query.filter_by(name=name).first()
-#	return render_template("playerpage.html",record=data)
-
-#playerpage still to be done
+    return render_template("WholetableS.html",records=data, n=n, name = name, prova=prova, prova2=prova2)
 
 
 @app.route('/editgame/<int:matchno>', methods=['GET', 'POST'])
@@ -129,11 +131,9 @@ def editgame(matchno):
         matchupd.Pl9 = form.Pl9.data
         matchupd.Pl10 = form.Pl10.data
         db.session.commit()
+        fillplayertable(db, Match, Player)
         return redirect("/")
     return render_template('EditGame.html', form=form, record=matchupd)
-
-#editform-> editmatch still to be done
-
 
 
 @app.route("/deletegame/<int:matchno>")
@@ -141,7 +141,26 @@ def deletegame(matchno):
     matchdel = Match.query.filter_by(matchno=matchno).first()
     db.session.delete(matchdel)
     db.session.commit()
+    fillplayertable(db, Match, Player)
     return redirect("/")
+
+#=================================
+#=======  Second Table   =========
+
+
+
+@app.route("/mostcaps")
+def mostcaps():
+    players = Player.query.order_by(desc(Player.caps)).all()
+    return render_template("MostCaps.html", records=players)
+
+
+#@app.route("/playerpage/<str:name>")
+#def playerpage(name):
+#	data = Player.query.filter_by(name=name).first()
+#	return render_template("playerpage.html",record=data)
+
+#playerpage still to be done
 
 if __name__=='__main__':
     app.run(debug=True, host='0.0.0.0')
