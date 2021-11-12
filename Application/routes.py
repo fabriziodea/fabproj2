@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect
-from application import app,db
+from application import app, db
 from application.forms import AddMatch, UpdateMatch
 from application.models import Player, Match
 from FivesFunc import breaklist, fillplayertable

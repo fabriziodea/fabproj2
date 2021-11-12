@@ -1,6 +1,9 @@
 from flask import url_for
 from flask_testing import TestCase
-from Fives import app, db, Match, Player
+from application import app, db
+from application.models import Match, Player
+from application.forms import AddMatch, UpdateMatch
+import application.routes
 import datetime
 
 
