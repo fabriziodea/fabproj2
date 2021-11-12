@@ -36,6 +36,7 @@
     <td> Player 8 </td>
     <td> Player 9 </td>
     <td> Player 10 </td>
+    <td> caps of first player</td>
     <td> Edit/Delete </td>
 
     </tr>
@@ -54,6 +55,7 @@
                         <td> <a href="{{url_for('playerpage', playername=record.Pl8 ) }}">{{ record.Pl8 }}</a> </td>
                         <td> <a href="{{url_for('playerpage', playername=record.Pl9 ) }}">{{ record.Pl9 }}</a></td>
                         <td> <a href="{{url_for('playerpage', playername=record.Pl10 ) }}">{{ record.Pl10 }} </a></td>
+                        <td>      {{ record.playerbr.caps}}</td>
                         <td> <a href="{{ url_for('editgame', matchno = record.matchno) }}"> edit </a>, 
                             <a href="{{ url_for('deletegame', matchno = record.matchno) }}"> delete </a>
                 

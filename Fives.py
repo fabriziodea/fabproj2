@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from sqlalchemy.orm import backref
 from FivesFunc import breaklist, fillplayertable
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
@@ -19,10 +20,18 @@ app.config['SECRET_KEY'] = getenv('secretkey')
 db = SQLAlchemy(app)
 
 
+class Player(db.Model):
+    name = db.Column(db.String(15), primary_key = True)
+    caps = db.Column(db.Integer)
+    first = db.Column(db.Date)
+    last = db.Column(db.Date)
+    Match= db.relationship('Match', backref='playerbr')
+
+
 class Match(db.Model):
     matchno= db.Column(db.Integer, primary_key = True)
     date = db.Column(db.Date)
-    Pl1 = db.Column(db.String(15))
+    Pl1 = db.Column(db.String(15), db.ForeignKey(Player.name), nullable=False)
     Pl2 = db.Column(db.String(15))
     Pl3 = db.Column(db.String(15))
     Pl4 = db.Column(db.String(15))
@@ -33,14 +42,12 @@ class Match(db.Model):
     Pl9 = db.Column(db.String(15))
     Pl10 = db.Column(db.String(15))
 
-class Player(db.Model):
-    name = db.Column(db.String(15), primary_key = True)
-    caps = db.Column(db.Integer)
-    first = db.Column(db.Date)
-    last = db.Column(db.Date)
+    #Match.playerbr.caps
 
 
-#db.drop_all()
+
+
+db.drop_all()
 db.create_all()
 
 class AddMatch(FlaskForm):
@@ -66,6 +73,7 @@ class UpdateMatch(FlaskForm):
 @app.route("/")
 def home():
     matches = Match.query.order_by(desc(Match.date)).all()
+    fillplayertable(db, Match, Player)
     return render_template("WholetableS.html", records=matches)
 
 @app.route("/addgame")
