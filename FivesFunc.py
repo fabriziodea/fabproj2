@@ -1,10 +1,6 @@
 # from Fives import Match
 
-
-
-
 #filtername=input("name of the player")
-
 #.order_by(Match.date)
 def stats(Match, filtername):
     
@@ -150,18 +146,6 @@ def fillplayertable(db, Match, Player):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 #for Match in Match.query.all():
 #    k=0
 #    mplayer= [Match.Pl1, Match.Pl2, Match.Pl3, Match.Pl4, Match.Pl5, Match.Pl6, Match.Pl7, Match.Pl8, Match.Pl9, Match.Pl10]
@@ -173,15 +157,6 @@ def fillplayertable(db, Match, Player):
 #            db.session.add(newplayer)
 #            db.session.commit()            
 #        k+=1
-
-
-
-
-
-
-
-
-
 
 """ line= stats(Match.query.first().Pl2)
 print(line)
