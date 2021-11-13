@@ -7,23 +7,23 @@ sudo apt install python3 python3-pip python3-venv gunicorn3 -y
 
 pip3 install -r requirements.txt
 
-while getops "c" options; do
-    case ${options} in
-        c) create=true;;
-    esac
-done
+#while getops "c" options; do
+#    case ${options} in
+#        c) create=true;;
+#    esac
+#done
 
-if [ ${create}]; then
-    python create.py
-fi
+#if [ ${create}]; then
+#    python create.py
+#fi
 
 
 #python3 app.py
 
 #python3 -m pytest --cov=application
 echo 'TESTING:'
-python3 -m pytest tests/Fives_test.py --cov=application --cov-report html
-#python3 Fives.py
+python3 -m pytest --cov=application --cov-report html
+#python3 app.py
 cat - > /tmp/app.service << EOF
 [Unit]
 Description=Run flask app as systemd
