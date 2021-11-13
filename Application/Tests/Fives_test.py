@@ -3,8 +3,8 @@ from flask_testing import TestCase
 from application import app, db
 from application.models import Match
 import datetime
-import application.routes
 
+#import application.routes
 #from application.forms import AddMatch, UpdateMatch
 
 

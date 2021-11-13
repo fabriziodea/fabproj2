@@ -21,7 +21,7 @@ pip3 install -r requirements.txt
 #python3 app.py
 
 #python3 -m pytest --cov=application
-python3 -m pytest --cov=Fives --cov-report html
+python3 -m pytest --cov=application --cov-report html
 #python3 Fives.py
 cat - > /tmp/app.service << EOF
 [Unit]
