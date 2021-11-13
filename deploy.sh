@@ -22,7 +22,7 @@ fi
 
 #python3 -m pytest --cov=application
 echo 'TESTING:'
-python3 -m pytest Fives_test.py --cov=application --cov-report html
+python3 -m pytest tests/Fives_test.py --cov=application --cov-report html
 #python3 Fives.py
 cat - > /tmp/app.service << EOF
 [Unit]
