@@ -5,6 +5,7 @@ from application.models import Player, Match
 from FivesFunc import breaklist, fillplayertable
 from sqlalchemy import desc
 from datetime import date
+import pymysql
 
 
 @app.route("/")
