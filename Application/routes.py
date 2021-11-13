@@ -1,74 +1,12 @@
-from flask import Flask, render_template, request, redirect
-from sqlalchemy.orm import backref
+from flask import render_template, request, redirect
+from application import app, db
+from application.forms import AddMatch, UpdateMatch
+from application.models import Player, Match
 from FivesFunc import breaklist, fillplayertable
+from sqlalchemy import desc
 from datetime import date
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import or_, func, desc
-from os import getenv, name
-from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, SelectField, SubmitField, DateField
 import pymysql
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = getenv('secretkey')
-
-#'sqlite:///data.db'
-#getenv('db_uri')
-
-db = SQLAlchemy(app)
-
-
-class Player(db.Model):
-    name = db.Column(db.String(15), primary_key = True)
-    caps = db.Column(db.Integer)
-    first = db.Column(db.Date)
-    last = db.Column(db.Date)
-    Match= db.relationship('Match', backref='playerbr')
-
-
-class Match(db.Model):
-    matchno= db.Column(db.Integer, primary_key = True)
-    date = db.Column(db.Date)
-    Pl1 = db.Column(db.String(15), db.ForeignKey(Player.name), nullable=False)
-    Pl2 = db.Column(db.String(15))
-    Pl3 = db.Column(db.String(15))
-    Pl4 = db.Column(db.String(15))
-    Pl5 = db.Column(db.String(15))
-    Pl6 = db.Column(db.String(15))
-    Pl7 = db.Column(db.String(15))
-    Pl8 = db.Column(db.String(15))
-    Pl9 = db.Column(db.String(15))
-    Pl10 = db.Column(db.String(15))
-
-    #Match.playerbr.caps
-
-
-
-
-db.drop_all()
-db.create_all()
-
-class AddMatch(FlaskForm):
-    date = DateField("date")
-    playertext = StringField("playertext")
-    submit = SubmitField('Add Match')
-
-
-class UpdateMatch(FlaskForm):
-    date = DateField("date")
-    Pl1 = StringField("Pl1")
-    Pl2 = StringField("Pl2")
-    Pl3 = StringField("Pl3")
-    Pl4 = StringField("Pl4")
-    Pl5 = StringField("Pl5")
-    Pl6 = StringField("Pl6")
-    Pl7 = StringField("Pl7")
-    Pl8 = StringField("Pl8")
-    Pl9 = StringField("Pl9")
-    Pl10 = StringField("Pl10")
-    submit = SubmitField('Update Match')
 
 @app.route("/")
 def home():
@@ -162,6 +100,3 @@ def mostcaps():
 def playerpage(playername):
 	data = Player.query.filter_by(name=playername).first()
 	return render_template("playerpage.html",record=data)
-
-if __name__=='__main__':
-    app.run(debug=True, host='0.0.0.0')
