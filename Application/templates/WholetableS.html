@@ -33,26 +33,27 @@ li a {
 }
 
 li a:hover {
-  background-color: #1d7e8f;
+  background-color: #005c99;
 }
 
 table {
   width: 100%;
   font-family: Arial, Helvetica, sans-serif;  
   font-size: 14px;
+  
 }
 
 th {
-  height: 70px;
-  background-color: #04AA6D;
-  order-bottom: 3px solid #ddd;
+  height: 40px;
+  background-color: #b3ffcc;
+  border-bottom: 2px solid #ddd;
 }
 td {
   text-align: center;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #ddd;
 }
 
-tr:hover {background-color: yellow;}
+tr:hover {background-color: #b3ffcc;}
 
 body {
   background-color: rgb(44, 202, 255);
@@ -69,7 +70,6 @@ body {
 
 
 <body>
-
     <ul>
       <li><a class="active" href="{{url_for('mostcaps')}}">Players Stats</a></li>
       <li><a href="{{url_for('backdoor')}}">BackDoor</a></li>
@@ -93,28 +93,24 @@ body {
 
 <button style="font-family: Arial, Helvetica, sans-serif; font-size: 16px"><a href="{{url_for('addgame')}}">Add new Match</a></button>
 </div>
-
-
     
 <br>
 
 
- <table border='5' bgcolor='lightyellow'>
-    <tr bgcolor='Green'>
-                
-    <td> Date </td>
-    <td> Player 1 </td>
-    <td> Player 2 </td>
-    <td> Player 3 </td>
-    <td> Player 4 </td>
-    <td> Player 5 </td>
-    <td> Player 6 </td>
-    <td> Player 7 </td>
-    <td> Player 8 </td>
-    <td> Player 9 </td>
-    <td> Player 10 </td>
-    <td> Edit/Delete </td>
-
+ <table>
+    <tr>        
+    <th> Date </th>
+    <th> Player 1 </th>
+    <th> Player 2 </th>
+    <th> Player 3 </th>
+    <th> Player 4 </th>
+    <th> Player 5 </th>
+    <th> Player 6 </th>
+    <th> Player 7 </th>
+    <th> Player 8 </th>
+    <th> Player 9 </th>
+    <th> Player 10 </th>
+    <th> Edit/Delete </th>
     </tr>
             {%  for record in records %}
         

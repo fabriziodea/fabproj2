@@ -1,19 +1,90 @@
-<html>
-<h2>Add another game</h2><br><br>
+<!DOCTYPE html>
 
+    <head>
+        <style>
+p1 {
+        font-family: Arial, Helvetica, sans-serif; font-size: 40px;
+      }
+
+
+p2 {
+        font-family: Arial, Helvetica, sans-serif;  font-size: 20px;
+      }
+
+ul {
+ font-family: Arial, Helvetica, sans-serif;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0099ff;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 20px 20px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #005c99;
+}
+
+table {
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;  
+  font-size: 14px;
+  
+}
+
+th {
+  height: 40px;
+  background-color: #b3ffcc;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+tr:hover {background-color: #b3ffcc;}
+
+body {
+  background-color: rgb(44, 202, 255);
+}
+
+
+    </style>
+</head>
+
+<ul>
+    <li><a class="active" href="{{url_for('mostcaps')}}">Players Stats</a></li>
+    <li><a href="{{url_for('backdoor')}}">BackDoor</a></li>
+  </ul>
+
+<center>
+<p1><b>Add another game</b></p2><br><br>
+
+    <div class='form' style="font-family: Arial, Helvetica, sans-serif; font-size: 16px">    
 <form action="{{url_for('savegame')}}" method="POST">
     {{ form.hidden_tag() }}
    
     When was the game played?<br>
     <input type="date" name="date" value="2021-01-08"><br><br><br>
    
-    <label for="playertext">Player list:</label><br>
+    <label for="playertext">Players list:</label><br>
     <input type="text" name="playertext" size="80"><br><br>
 
     <input type="submit">
 </form>
+</div>
+</center>
 
-Return to home
-<a href="{{url_for('home')}}">HOME</a>
 
 </html>
