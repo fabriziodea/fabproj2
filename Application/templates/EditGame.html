@@ -1,32 +1,107 @@
-<html>
-<h1>Update game {{record.date}}</h1>
+<!DOCTYPE html>
 
-<div class='form'>
+    <head>
+        <style>
+p1 {
+        font-family: Arial, Helvetica, sans-serif; font-size: 40px;
+      }
+
+
+p2 {
+        font-family: Arial, Helvetica, sans-serif;  font-size: 20px;
+      }
+
+ul {
+ font-family: Arial, Helvetica, sans-serif;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0099ff;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 20px 20px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #005c99;
+}
+
+table {
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;  
+  font-size: 14px;
+  
+}
+
+th {
+  height: 40px;
+  background-color: #b3ffcc;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+tr:hover {background-color: #b3ffcc;}
+
+body {
+  background-color: rgb(44, 202, 255);
+}
+
+
+
+    </style>
+</head>
+
+<ul>
+    <li><a class="active" href="{{url_for('home')}}">HOME</a></li>
+    <li><a href="{{url_for('mostcaps')}}">Players Stats</a></li>
+    <li><a href="{{url_for('backdoor')}}">BackDoor</a></li>
+  </ul>
+
+
+<center>
+<p1><b>Update game {{record.date}}</b></p1>
+<br><br>
+
+<div class='form' style="font-family: Arial, Helvetica, sans-serif; font-size: 16px">
     <form action="" method="POST">
         {{ form.hidden_tag() }}
-        Date:      {{ form.date }}
+        Date     :  {{ form.date }}
         <br>
-        Player 1:  {{ form.Pl1 }}
+        Player  1:  {{ form.Pl1 }}
         <br> 
-        Player 2:  {{ form.Pl2 }}
+        Player  2:  {{ form.Pl2 }}
         <br>
-        Player 3:  {{ form.Pl3 }}
+        Player  3:  {{ form.Pl3 }}
         <br>
-        Player 4:  {{ form.Pl4 }}
+        Player  4:  {{ form.Pl4 }}
         <br>
-        Player 5:  {{ form.Pl5 }}
+        Player  5:  {{ form.Pl5 }}
         <br>
-        Player 6:  {{ form.Pl6 }}
+        Player  6:  {{ form.Pl6 }}
         <br>
-        Player 7:  {{ form.Pl7 }}
+        Player  7:  {{ form.Pl7 }}
         <br>
-        Player 8:  {{ form.Pl8 }}
+        Player  8:  {{ form.Pl8 }}
         <br>
-        Player 9:  {{ form.Pl9 }}
+        Player  9:  {{ form.Pl9 }}
         <br>
         Player 10: {{ form.Pl10 }}
         <br>
         {{ form.submit }}
     </form>
 </div>
+</center>
 </html>

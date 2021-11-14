@@ -1,44 +1,113 @@
-<html>
-<h2>Monday Games</h2>
-<br><br>
-<a href="{{url_for('mostcaps')}}">Players Stats</a>
-<br><br>
-<a href="{{url_for('addgame')}}">Add new Match</a>
-<br><br>
-<a href="{{url_for('backdoor')}}">BackDoor</a>
+<!DOCTYPE html>
+
+    <head>
+        <style>
+p1 {
+        font-family: Arial, Helvetica, sans-serif; font-size: 40px;
+      }
 
 
+p2 {
+        font-family: Arial, Helvetica, sans-serif;  font-size: 20px;
+      }
+
+ul {
+ font-family: Arial, Helvetica, sans-serif;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0099ff;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 20px 20px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #005c99;
+}
+
+table {
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;  
+  font-size: 14px;
+  
+}
+
+th {
+  height: 40px;
+  background-color: #b3ffcc;
+  border-bottom: 2px solid #ddd;
+}
+td {
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+tr:hover {background-color: #b3ffcc;}
+
+body {
+  background-color: rgb(44, 202, 255);
+}
+
+
+    </style>
+</head>
+
+
+
+
+<body>
+    <ul>
+      <li><a class="active" href="{{url_for('mostcaps')}}">Players Stats</a></li>
+      <li><a href="{{url_for('backdoor')}}">BackDoor</a></li>
+    </ul>
     
+    <br><br>
+<center>
+<p1><b>5 a side Games</b></p1>
+</center>
+<br><br>
+
+<form action="{{ url_for('filtergame') }}" method="POST">
+    <input type="text" name="filtername" size="31" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px"><br>
+    <div style="float:left">
+    <input type="submit" value="Filter by name" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px">
+    </form>
+<button style="font-family: Arial, Helvetica, sans-serif; font-size: 16px"><a href="{{url_for('home')}}">Display all games</a></button>
+</div>
+
+<div style=text-align:right;>
+
+<button style="font-family: Arial, Helvetica, sans-serif; font-size: 16px"><a href="{{url_for('addgame')}}">Add new Match</a></button>
+</div>
+    
+<br>
 
 
-
-    <br><br><br><br>
-    Choose name to filter games
-    <form action="{{ url_for('filtergame') }}" method="POST">
-        <input type="text" name="filtername" size="50"><br><br>
-                    <input type="submit" value="Filter">
-        </form><br>
-    <a href="{{url_for('home')}}">Display all games</a>
-
-
-
-
- <table border='5' bgcolor='lightyellow'>
-    <tr bgcolor='Green'>
-                
-    <td> Date </td>
-    <td> Player 1 </td>
-    <td> Player 2 </td>
-    <td> Player 3 </td>
-    <td> Player 4 </td>
-    <td> Player 5 </td>
-    <td> Player 6 </td>
-    <td> Player 7 </td>
-    <td> Player 8 </td>
-    <td> Player 9 </td>
-    <td> Player 10 </td>
-    <td> Edit/Delete </td>
-
+ <table>
+    <tr>        
+    <th> Date </th>
+    <th> Player 1 </th>
+    <th> Player 2 </th>
+    <th> Player 3 </th>
+    <th> Player 4 </th>
+    <th> Player 5 </th>
+    <th> Player 6 </th>
+    <th> Player 7 </th>
+    <th> Player 8 </th>
+    <th> Player 9 </th>
+    <th> Player 10 </th>
+    <th> Edit/Delete </th>
     </tr>
             {%  for record in records %}
         
@@ -54,8 +123,8 @@
                         <td> <a href="{{url_for('playerpage', playername=record.Pl8 ) }}">{{ record.Pl8 }}</a> </td>
                         <td> <a href="{{url_for('playerpage', playername=record.Pl9 ) }}">{{ record.Pl9 }}</a></td>
                         <td> <a href="{{url_for('playerpage', playername=record.Pl10 ) }}">{{ record.Pl10 }} </a></td>
-                        <td> <a href="{{ url_for('editgame', matchno = record.matchno) }}"> edit </a>, 
-                            <a href="{{ url_for('deletegame', matchno = record.matchno) }}"> delete </a>
+                        <td> <a href="{{ url_for('editgame', matchno = record.matchno) }}"> Edit </a> 
+                            <a href="{{ url_for('deletegame', matchno = record.matchno) }}"> Delete </a>
                 
                         </td>
                 </tr>
@@ -63,9 +132,7 @@
             {% endfor %}
         </table>
 
-<br>
-<a href="{{url_for('addgame')}}">Add new Match</a>
 
 
-
+</body>
 </html>
