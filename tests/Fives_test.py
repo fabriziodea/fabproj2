@@ -74,7 +74,7 @@ class TestViews(TestBase):
     def test_del_game(self):
         response = self.client.get(url_for('deletegame', matchno=1), follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Monday Games', response.data)
+        self.assertIn(b'5 a side Games', response.data)
 
     def test_update_game(self):
         response = self.client.post(
