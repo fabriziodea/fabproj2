@@ -14,6 +14,12 @@ def home():
     fillplayertable(db, Match, Player)
     return render_template("WholetableS.html", records=matches)
 
+@app.route("/backdoor")
+def backdoor():
+    matches = Match.query.order_by(desc(Match.date)).all()
+    fillplayertable(db, Match, Player)
+    return render_template("Backdoor.html", records=matches)
+
 @app.route("/addgame")
 def addgame():
     form = AddMatch()

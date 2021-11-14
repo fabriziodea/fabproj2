@@ -1,6 +1,6 @@
 from flask import url_for
 from flask_testing import TestCase
-from app import app, db
+from application import app, db
 from application.models import Match
 import datetime
 import application.routes
@@ -31,6 +31,11 @@ class TestBase(TestCase):
 class TestViews(TestBase):
     def test_match_get(self):
         response = self.client.get(url_for('home'))
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Johna', response.data)
+
+    def test_match_backdoor(self):
+        response = self.client.get(url_for('backdoor'))
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Johna', response.data)
 

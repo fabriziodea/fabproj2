@@ -3,9 +3,10 @@
 <br><br>
 <a href="{{url_for('mostcaps')}}">Players Stats</a>
 <br><br>
-<a href="{{url_for('addgame')}}">Add new Match</a>
-<br><br>
-<a href="{{url_for('backdoor')}}">BackDoor</a>
+    <a href="{{url_for('addgame')}}">Add new Match</a>
+
+   
+
 
 
     
@@ -26,8 +27,10 @@
  <table border='5' bgcolor='lightyellow'>
     <tr bgcolor='Green'>
                 
+    <td> Match No </td>
     <td> Date </td>
-    <td> Player 1 </td>
+    <td> MOTM </td>
+    <td> BACKDOOR </td>
     <td> Player 2 </td>
     <td> Player 3 </td>
     <td> Player 4 </td>
@@ -43,8 +46,10 @@
             {%  for record in records %}
         
                 <tr>
+                        <td>  {{record.matchno}}   </td>
                         <td>  {{record.date}}   </td>
-                        <td> <a href="{{url_for('playerpage', playername=record.Pl1 ) }}">{{ record.Pl1 }} </a></td>
+                        <td> <a href="{{url_for('playerpage', playername=record.Pl1 ) }}">{{ record.Pl1 }}  </a></td>
+                        <td>caps:{{ record.playerbr.caps}}</td>
                         <td> <a href="{{url_for('playerpage', playername=record.Pl2 ) }}">{{ record.Pl2 }}</a> </td>
                         <td> <a href="{{url_for('playerpage', playername=record.Pl3 ) }}">{{ record.Pl3 }}</a> </td>
                         <td> <a href="{{url_for('playerpage', playername=record.Pl4 ) }}">{{ record.Pl4 }}</a> </td>
