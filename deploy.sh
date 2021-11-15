@@ -22,7 +22,7 @@ pip3 install -r requirements.txt
 
 #python3 -m pytest --cov=application
 echo 'TESTING:'
-python3 -m pytest --cov=application --cov-report html
+python3 -m pytest --cov=Application --cov-report html
 #python3 app.py
 cat - > /tmp/app.service << EOF
 [Unit]
