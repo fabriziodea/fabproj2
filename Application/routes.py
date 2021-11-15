@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect
-from application import app, db
-from application.forms import AddMatch, UpdateMatch
-from application.models import Player, Match
+from Application import app, db
+from Application.forms import AddMatch, UpdateMatch
+from Application.models import Player, Match
 from FivesFunc import breaklist, fillplayertable
 from sqlalchemy import desc
 from datetime import date
