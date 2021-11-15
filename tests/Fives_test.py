@@ -1,10 +1,10 @@
 from flask import url_for
 from flask_testing import TestCase
-from application import app, db
-from application.models import Match
+from Application import app, db
+from Application.models import Match
 import datetime
-import application.routes
-from application.forms import AddMatch, UpdateMatch
+import Application.routes
+from Application.forms import AddMatch, UpdateMatch
 
 
 
