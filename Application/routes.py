@@ -105,4 +105,4 @@ def mostcaps():
 @app.route("/playerpage/<playername>")
 def playerpage(playername):
 	data = Player.query.filter_by(name=playername).first()
-	return render_template("playerpage.html",record=data)
+	return render_template("PlayerPage.html",record=data)
