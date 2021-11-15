@@ -22,7 +22,7 @@ The players table shows the number of games played by each player and the date o
 Each match has a man of the match (Player1) but every player can be the man of the match of multiple games (one-to-many relationship).
 The ERD for this MVP is shown below:
 
-xxx my ERD project
+![app structure](https://github.com/fabriziodea/fabproj1/blob/master/Images/ERD.png)
 
 
 ## Pages:
@@ -38,7 +38,11 @@ In order to simplify data entry, the 'addgame' page allows to submit a block of 
 ## CI Pipeline:  
 In addition to the above requirements, the project required the implementation of several stages of a typical CI pipeline. These were project tracking, version control, development environment and build server. For project tracking Jira was used to create a project tracking board. I created Epics describing biggest tasks or group of issues, each Epic was broken down into user stories, prioritised and moved from project backlog to sprint backlog, to review and then complete as the project progressed. Here there are a couple of examples of the Jira Roadmap during the project:
 
-xxxxxxxxx
+![Jira Board1](https://github.com/fabriziodea/fabproj1/blob/master/Images/Jira%20Board.png)
+![Jira Roadmap1](https://github.com/fabriziodea/fabproj1/blob/master/Images/Jira%20Roadmap1.png)
+![Jira Roadmap2](https://github.com/fabriziodea/fabproj1/blob/master/Images/Jira%20Roadmap2.png)
+
+
 
 For version control, git was used, with the project repository hosted on github. Version control via git allows changes to the project to be made and committed whilst keeping the commit history for access to earlier versions. GitHub as a repository hosting service allows the repository to be stored away from the development environment, as well as providing webhooks, which send http POST requests to the build server to automate building and testing.  
 Furthermore smart commits were used to automatically move user stories in the Jira board in the appropriate state (To do - In Progress - Done).
