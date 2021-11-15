@@ -45,14 +45,23 @@ In addition to the above requirements, the project required the implementation o
 
 
 For version control, git was used, with the project repository hosted on github. Version control via git allows changes to the project to be made and committed whilst keeping the commit history for access to earlier versions. GitHub as a repository hosting service allows the repository to be stored away from the development environment, as well as providing webhooks, which send http POST requests to the build server to automate building and testing.  
-Furthermore smart commits were used to automatically move user stories in the Jira board in the appropriate state (To do - In Progress - Done).
+Furthermore smart commits were used to automatically move user stories in the Jira board in the appropriate state (To do - In Progress - Done). Here a few examples of smart commits:
 
-Jenkins was used as a build server, providing automation of building and testing. This automation is achieved by setting up a freestyle project which executes the deploy.sh script when it recieves a webhook from github upon pushing a commit. Jenkins is also used to run the app via gunicorn once testing is complete. Gunicorn is a WSGI server which allows multiple processes to run the app simultaneously.
+![Smart commits](https://github.com/fabriziodea/fabproj1/blob/master/Images/Smart%20Commits.png)
+
+Here github shows the progress of commits on features branches:
+
+![Git Branches](https://github.com/fabriziodea/fabproj1/blob/master/Images/Branches%202.png)
+
+Jenkins was used as a build server, providing automation of building and testing. This automation is achieved by setting up a freestyle project which executes the deploy.sh script when it recieves a webhook from github upon pushing a commit. Jenkins is also used to run the app via gunicorn once testing is complete. Gunicorn is a WSGI server which allows multiple processes to run the app simultaneously. Here an example of a coverage report produced as an artifact from Jenkins after a build:
+
+![Coverage Report](https://github.com/fabriziodea/fabproj1/blob/master/Images/Cov%20Report1.png)
+
 
 ## Risk Assessment:
 Prior to building the app, a risk assessment was undertaken to identify risks and propose measures to control these risks. These measures could then be implemented in the app. This initial risk assessment is shown below:   
 
-xxxx excel tab
+![Risk Assessment](https://github.com/fabriziodea/fabproj1/blob/master/Images/RiskAssessment.png)
 
 
 Some of the control measures implemented in the project as a result of the risk assessment are as follows:  
@@ -64,10 +73,10 @@ Testing the app was an essential part of the development process. Unit testing t
 
 As this is not a production app, tests such as security tests and performance tests were not part of the scope of this project; only testing for functionality was performed. These tests are automated using Jenkins via webhooks. A successful build, in which all tests passed, is shown below:  
 
-xxxx Successful Jenkins xxxx
+![Jenkins](https://github.com/fabriziodea/fabproj1/blob/master/Images/Jenkins.png)
 
 The coverage reports, showing what percentage of statements were included in the tests, were output as html files, which were archived post-build. The coverage report for the above build was:  
 
-xxxxx Successful coverage report
+![Coverage Report](https://github.com/fabriziodea/fabproj1/blob/master/Images/Cov%20Report1.png)
 
 Showing 98% coverage overall. All tests must pass for a build to be successful, a single failed test marks the build overall as failed.
