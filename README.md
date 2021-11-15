@@ -10,7 +10,7 @@ This repository contains my deliverable for the QA devops fundamental project.
 
 
 ## Project Brief:  
-The brief for this project was to design and produce a web app of my choosing. The app needed to have CRUD (create, read, update and delete) functionality, needed to use the Flask micro-framework, and had to store information in a MySQL database comprised of a minimum of two tables sharing a one-to-many relationship. 
+The brief for this project was to design and realise a web app of my choosing. The app needed to have CRUD (create, read, update and delete) functionality, to use the Flask micro-framework, and had to store information in a MySQL database comprised of a minimum of two tables sharing a one-to-many relationship. 
 
 ## App Design:
 I have chosen to build an app to track players and stats for 5 a side football games.
@@ -43,8 +43,7 @@ In addition to the above requirements, the project required the implementation o
 ![Jira Roadmap2](https://github.com/fabriziodea/fabproj1/blob/master/Images/Jira%20Roadmap2.png)
 
 
-
-For version control, git was used, with the project repository hosted on github. Version control via git allows changes to the project to be made and committed whilst keeping the commit history for access to earlier versions. GitHub as a repository hosting service allows the repository to be stored away from the development environment, as well as providing webhooks, which send http POST requests to the build server to automate building and testing.  
+For version control, git was used, with the project repository hosted on github. Version control via git allows to store code in a central repository, track changes over time and create branches so that additions are made in isolation from stable code. GitHub as a repository hosting service allows the repository to be stored away from the development environment, as well as providing webhooks, which send http POST requests to the build server to automate building and testing.  
 Furthermore smart commits were used to automatically move user stories in the Jira board in the appropriate state (To do - In Progress - Done). Here a few examples of smart commits:
 
 ![Smart commits](https://github.com/fabriziodea/fabproj1/blob/master/Images/Smart%20Commits.png)
@@ -53,9 +52,7 @@ Here github shows the progress of commits on features branches:
 
 ![Git Branches](https://github.com/fabriziodea/fabproj1/blob/master/Images/Branches%202.png)
 
-Jenkins was used as a build server, providing automation of building and testing. This automation is achieved by setting up a freestyle project which executes the deploy.sh script when it recieves a webhook from github upon pushing a commit. Jenkins is also used to run the app via gunicorn once testing is complete. Gunicorn is a WSGI server which allows multiple processes to run the app simultaneously. Here an example of a coverage report produced as an artifact from Jenkins after a build:
-
-![Coverage Report](https://github.com/fabriziodea/fabproj1/blob/master/Images/Cov%20Report1.png)
+Jenkins was used as a build server, providing automation of building and testing. This automation is achieved by setting up a freestyle project which executes the deploy.sh script when it recieves a webhook from github upon pushing a commit. Jenkins is also used to run the app via gunicorn once testing is complete. Gunicorn is a WSGI server which allows multiple processes to run the app simultaneously.
 
 
 ## Risk Assessment:
@@ -73,10 +70,10 @@ Testing the app was an essential part of the development process. Unit testing t
 
 As this is not a production app, tests such as security tests and performance tests were not part of the scope of this project; only testing for functionality was performed. These tests are automated using Jenkins via webhooks. A successful build, in which all tests passed, is shown below:  
 
-![Jenkins](https://github.com/fabriziodea/fabproj1/blob/master/Images/Jenkins.png)
+![Jenkins](https://github.com/fabriziodea/fabproj1/blob/master/Images/Jenkins1511.png)
 
 The coverage reports, showing what percentage of statements were included in the tests, were output as html files, which were archived post-build. The coverage report for the above build was:  
 
-![Coverage Report](https://github.com/fabriziodea/fabproj1/blob/master/Images/Cov%20Report1.png)
+![Coverage Report](https://github.com/fabriziodea/fabproj1/blob/master/Images/CovReport1511.png)
 
 Showing 98% coverage overall. All tests must pass for a build to be successful, a single failed test marks the build overall as failed.
