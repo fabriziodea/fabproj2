@@ -2,11 +2,11 @@
 
 #filtername=input("name of the player")
 #.order_by(Match.date)
-def stats(Match, filtername):
+def stats(Matches, filtername):
     
-    data = Match.query.filter( (Match.Pl1==filtername) | (Match.Pl2==filtername) | (Match.Pl3==filtername) 
-                            | (Match.Pl4==filtername) | (Match.Pl5==filtername)  | (Match.Pl6==filtername) | (Match.Pl7==filtername)  
-                            | (Match.Pl8==filtername) | (Match.Pl9==filtername)  | (Match.Pl10==filtername)   ).order_by(Match.date).all()
+    data = Matches.query.filter( (Matches.Pl1==filtername) | (Matches.Pl2==filtername) | (Matches.Pl3==filtername) 
+                            | (Matches.Pl4==filtername) | (Matches.Pl5==filtername)  | (Matches.Pl6==filtername) | (Matches.Pl7==filtername)  
+                            | (Matches.Pl8==filtername) | (Matches.Pl9==filtername)  | (Matches.Pl10==filtername)   ).order_by(Matches.date).all()
 
     n= len(data)
     date1=data[0].date
@@ -26,6 +26,7 @@ def stats(Match, filtername):
 
 def breaklist(textraw):
     #accents:
+    textraw = textraw.strip()      # no trailing or leading spaces
     text=""
     for c in textraw:
         if c=='è' or c=='é':
@@ -40,12 +41,15 @@ def breaklist(textraw):
     i=0
 
     while i< len(text)-3:
+        if text[i]==" " and text[i+1]==" ":         #modified to remove double spaces
+            i+=1                                    #
+            continue                                # 
         if text[i]==" ":
-            if text[i+2]==" " or text[i+3]==" " or text[i+1]==" ":
+            if text[i+2]==" " or text[i+3]==" ":
                 player+=" "  
             else:
                 player=player.capitalize()
-                lista.append(player)
+                lista.append(player.rstrip())      #modified no trailing spaces due to special chars   
                 player=""
         elif text[i].isalpha():
             player+=text[i]
@@ -54,14 +58,14 @@ def breaklist(textraw):
     while i<len(text):
         if text[i]==" ":
             player=player.capitalize()
-            lista.append(player)
+            lista.append(player.rstrip())      #modified no trailing spaces due to special chars     
             player=""
         elif text[i].isalpha():
                 player+=text[i]
         i+=1
     player=player.capitalize()   
     if len(player)>0:
-        lista.append(player)
+        lista.append(player.rstrip())      #modified no trailing spaces due to special chars           
 
     while len(lista)<10:
         n=10-len(lista)
@@ -74,16 +78,16 @@ def breaklist(textraw):
 
 #=========================
 
-def fillplayertable(db, Match, Player):
+def fillplayertable(db, Matches, Player):
     uniqlist=[]
     Player.query.delete()
-    for mat in Match.query.all():
+    for mat in Matches.query.all():
         k=0
         mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
         while k<10:
             if mplayer[k] not in uniqlist:
                 uniqlist.append(mplayer[k])
-                line= stats(Match, mplayer[k])
+                line= stats(Matches, mplayer[k])
                 newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
                 db.session.add(newplayer)
                 db.session.commit()
