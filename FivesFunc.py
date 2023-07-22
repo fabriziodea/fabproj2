@@ -15,6 +15,20 @@ def stats(Matches, filtername):
     results=[filtername, n, date1, date2]
     return results
 
+
+def statsyear(Matches, filtername, year):
+    
+    data = Matches.query.filter(extract('year', Matches.date) == year).filter( (Matches.Pl1==filtername) | (Matches.Pl2==filtername)
+                            | (Matches.Pl3==filtername) | (Matches.Pl4==filtername) | (Matches.Pl5==filtername)  | (Matches.Pl6==filtername)
+                            | (Matches.Pl7==filtername) | (Matches.Pl8==filtername) | (Matches.Pl9==filtername)  | (Matches.Pl10==filtername)   
+                            ).order_by(Matches.date).all()
+
+    n= len(data)
+    date1=data[0].date
+    date2= data[-1].date
+    results=[filtername, n, date1, date2]
+    return results
+
 #print(filtername)
 #print(n)
 #print(date1)
@@ -106,7 +120,7 @@ def fillplayeryeartable(db, Matches, Player, year):
         while k<10:
             if mplayer[k] not in uniqlist:
                 uniqlist.append(mplayer[k])
-                line= stats(yearmatches, mplayer[k])
+                line= statsyear(Matches, mplayer[k], year)
                 newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
                 db.session.add(newplayer)
                 db.session.commit()
