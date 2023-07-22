@@ -1,4 +1,5 @@
 # from Fives import Match
+from sqlalchemy import extract
 
 #filtername=input("name of the player")
 #.order_by(Match.date)
@@ -94,6 +95,25 @@ def fillplayertable(db, Matches, Player):
             k+=1
     return Player
 
+def fillplayeryeartable(db, Matches, Player, year):
+    uniqlist=[]
+    Player.query.delete()
+    yearmatches = Matches.query.filter(extract('year', Matches.date) == year).all()
+
+    for mat in yearmatches:
+        k=0
+        mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
+        while k<10:
+            if mplayer[k] not in uniqlist:
+                uniqlist.append(mplayer[k])
+                line= stats(yearmatches, mplayer[k])
+                newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+                db.session.add(newplayer)
+                db.session.commit()
+            k+=1
+    return Player
+
+   
     
 
 

@@ -2,8 +2,8 @@ from flask import render_template, request, redirect
 from Application import app, db
 from Application.forms import AddMatch, UpdateMatch
 from Application.models import Player, Matches
-from FivesFunc import breaklist, fillplayertable
-from sqlalchemy import desc
+from FivesFunc import breaklist, fillplayertable, fillplayeryeartable
+from sqlalchemy import desc, extract
 from datetime import date
 import pymysql
 
@@ -98,6 +98,7 @@ def deletegame(matchno):
 
 @app.route("/mostcaps")
 def mostcaps():
+    fillplayertable(db, Matches, Player)
     players = Player.query.order_by(desc(Player.caps)).all()
     return render_template("MostCaps.html", records=players)
 
@@ -106,3 +107,9 @@ def mostcaps():
 def playerpage(playername):
 	data = Player.query.filter_by(name=playername).first()
 	return render_template("PlayerPage.html",record=data)
+
+@app.route("/filteryear",methods=["POST"])
+def filteryear():
+  fillplayeryeartable(db, Matches, Player, request.form["filteryear"])
+  data = Player.query.order_by(desc(Player.caps)).all()
+  return render_template("MostCaps.html", records=data)
