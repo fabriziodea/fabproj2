@@ -1,4 +1,5 @@
 # from Fives import Match
+from sqlalchemy import extract
 
 #filtername=input("name of the player")
 #.order_by(Match.date)
@@ -7,6 +8,20 @@ def stats(Matches, filtername):
     data = Matches.query.filter( (Matches.Pl1==filtername) | (Matches.Pl2==filtername) | (Matches.Pl3==filtername) 
                             | (Matches.Pl4==filtername) | (Matches.Pl5==filtername)  | (Matches.Pl6==filtername) | (Matches.Pl7==filtername)  
                             | (Matches.Pl8==filtername) | (Matches.Pl9==filtername)  | (Matches.Pl10==filtername)   ).order_by(Matches.date).all()
+
+    n= len(data)
+    date1=data[0].date
+    date2= data[-1].date
+    results=[filtername, n, date1, date2]
+    return results
+
+
+def statsyear(Matches, filtername, year):
+    
+    data = Matches.query.filter(extract('year', Matches.date) == year).filter( (Matches.Pl1==filtername) | (Matches.Pl2==filtername)
+                            | (Matches.Pl3==filtername) | (Matches.Pl4==filtername) | (Matches.Pl5==filtername)  | (Matches.Pl6==filtername)
+                            | (Matches.Pl7==filtername) | (Matches.Pl8==filtername) | (Matches.Pl9==filtername)  | (Matches.Pl10==filtername)   
+                            ).order_by(Matches.date).all()
 
     n= len(data)
     date1=data[0].date
@@ -94,6 +109,25 @@ def fillplayertable(db, Matches, Player):
             k+=1
     return Player
 
+def fillplayeryeartable(db, Matches, Player, year):
+    uniqlist=[]
+    Player.query.delete()
+    yearmatches = Matches.query.filter(extract('year', Matches.date) == year).all()
+
+    for mat in yearmatches:
+        k=0
+        mplayer= [mat.Pl1, mat.Pl2, mat.Pl3, mat.Pl4, mat.Pl5, mat.Pl6, mat.Pl7, mat.Pl8, mat.Pl9, mat.Pl10]
+        while k<10:
+            if mplayer[k] not in uniqlist:
+                uniqlist.append(mplayer[k])
+                line= statsyear(Matches, mplayer[k], year)
+                newplayer = Player(name=line[0], caps=line[1], first=line[2], last=line[3])
+                db.session.add(newplayer)
+                db.session.commit()
+            k+=1
+    return Player
+
+   
     
 
 
